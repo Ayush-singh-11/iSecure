@@ -51,13 +51,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     <link rel="stylesheet" href="//cdn.datatables.net/2.1.8/css/dataTables.dataTables.min.css">
 
     <style>
-        html,body {
-            /* Hides the scrollbar */
-            overflow: hidden;
-        }
-        footer {
-            margin-top: 20vh;
-        }
+    .me {
+        margin-bottom: 42vh;
+    }
     </style>
 
 </head>
@@ -100,8 +96,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                         <input type="hidden" name="snoEdit" id="snoEdit">
                         <div class="form-group my-2">
                             <label for="fname" class="form-label">First Name</label>
-                            <input type="text" autofocus maxlength="15" class="form-control" id="fname" name="fname"
-                                >
+                            <input type="text" autofocus maxlength="15" class="form-control" id="fname" name="fname">
                         </div>
                         <div class="form-group my-2">
                             <label for="mname" class="form-label">Middle Name</label>
@@ -149,33 +144,32 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     }
     ?>
 
-    
-<div class="container text-center" style="margin-top:135px">
-    <h3>List of Users</h3>
-</div>
 
-<div class="container"></div>
-        <table class="table" id="myTable">
-            <hr>
-            <thead>
-                <tr>
-                    <th scope="col">S.No</th>
-                    <th scope="col">Username</th>
-                    <th scope="col">Actions</th>
-                </tr>
-            </thead>
-            <tbody>
-                <?php
-                $sql = "SELECT * FROM `Customers`";
-                $result = mysqli_query($conn, $sql);
-                $sno = 0;
-                while ($row = mysqli_fetch_assoc($result)) {
-                    $sno = $sno + 1;
-                    echo "<tr>
-                            <th scope='row'>drsfil" . $sno . "</th>
+    <div class="container text-center" style="margin-top:135px">
+        <h3>List of Users</h3>
+    </div>
+
+    <div class="container"></div>
+    <table class="table" id="myTable">
+        <hr>
+        <thead>
+            <tr>
+                <th scope="col">S.No</th>
+                <th scope="col">Username</th>
+                <th scope="col">Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            <?php
+            $sql = "SELECT * FROM `Customers`";
+            $result = mysqli_query($conn, $sql);
+            $sno = 0;
+            while ($row = mysqli_fetch_assoc($result)) {
+                $sno = $sno + 1;
+                echo "<tr>
+                            <th scope='row'>" . $sno . "</th>
                             <td >" . $row['FullName'] . "</td>
                             <td> 
-
                             <button class='edit btn btn-sm btn-primary'
                             data-fname='" . $row['FirstName'] . "'
                             data-mname='" . $row['MiddleName'] . "'
@@ -188,14 +182,14 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                             </td>
                         </tr>
                         ";
-                }
-                ?>
-            </tbody>
-        </table>
-        <hr>
+            }
+            ?>
+        </tbody>
+    </table>
+    <hr>
     </div>
 
-
+    <div class="me"></div>
 
 
     <footer class="bg-dark text-center text-white">
@@ -211,7 +205,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     </script>
     <script src="//cdn.datatables.net/2.1.8/js/dataTables.min.js"></script>
     <script>
-        let table = new DataTable('#myTable');
+    let table = new DataTable('#myTable');
     </script>
 
     <!-- Option 1: Bootstrap Bundle with Popper -->
@@ -221,61 +215,61 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
 
     <script>
-        setTimeout(function() {
-            var alert = document.getElementById("danger-alert");
-            if (alert) {
-                var bsAlert = new bootstrap.Alert(alert);
-                bsAlert.close(); // Close the alert after 5 seconds
-            }
-        }, 1000); // 5000 milliseconds = 5 seconds
+    setTimeout(function() {
+        var alert = document.getElementById("danger-alert");
+        if (alert) {
+            var bsAlert = new bootstrap.Alert(alert);
+            bsAlert.close(); // Close the alert after 5 seconds
+        }
+    }, 1000); // 5000 milliseconds = 5 seconds
     </script>
 
     <script>
-        edits = document.getElementsByClassName('edit');
-        Array.from(edits).forEach((element) => {
-            element.addEventListener("click", (e) => {
-                // console.log("edit ");
-                
-                // tr = e.target.parentNode.parentNode;
-                // console.log(tr);
-                // let title = tr.getElementsByTagName("td")[0].innerText;
+    edits = document.getElementsByClassName('edit');
+    Array.from(edits).forEach((element) => {
+        element.addEventListener("click", (e) => {
+            // console.log("edit ");
 
-                // Get the data attributes
-                let fnamejs = e.target.getAttribute("data-fname");
-                let mnamejs = e.target.getAttribute("data-mname");
-                let lnamejs = e.target.getAttribute("data-lname");
-                let fullNamejs = e.target.getAttribute("data-fullname");
-                console.log(fullNamejs,fnamejs,mnamejs,lnamejs);
+            // tr = e.target.parentNode.parentNode;
+            // console.log(tr);
+            // let title = tr.getElementsByTagName("td")[0].innerText;
 
-                // Set values in the modal fields
-                fname.value = fnamejs;
-                mname.value = mnamejs;
-                lname.value = lnamejs;
-                titleEdit.value = fullNamejs;
+            // Get the data attributes
+            let fnamejs = e.target.getAttribute("data-fname");
+            let mnamejs = e.target.getAttribute("data-mname");
+            let lnamejs = e.target.getAttribute("data-lname");
+            let fullNamejs = e.target.getAttribute("data-fullname");
+            console.log(fullNamejs, fnamejs, mnamejs, lnamejs);
 
-                // Set the snoEdit field with the row's ID
-                snoEdit.value = e.target.id;
-                // console.log(e.target.id,snoEdit.value);
+            // Set values in the modal fields
+            fname.value = fnamejs;
+            mname.value = mnamejs;
+            lname.value = lnamejs;
+            titleEdit.value = fullNamejs;
 
-                // Open the modal
-                $('#editModal').modal('toggle');
-            })
+            // Set the snoEdit field with the row's ID
+            snoEdit.value = e.target.id;
+            // console.log(e.target.id,snoEdit.value);
+
+            // Open the modal
+            $('#editModal').modal('toggle');
         })
+    })
 
-        deletes = document.getElementsByClassName('delete');
-        Array.from(deletes).forEach((element) => {
-            element.addEventListener("click", (e) => {
-                // console.log("edit ");
-                sno = e.target.id.substr(1);
+    deletes = document.getElementsByClassName('delete');
+    Array.from(deletes).forEach((element) => {
+        element.addEventListener("click", (e) => {
+            // console.log("edit ");
+            sno = e.target.id.substr(1);
 
-                if (confirm("Are you sure you want to delete this User!")) {
-                    console.log("yes");
-                    window.location = `/iSecure/adminPage.php?delete=${sno}`;
-                } else {
-                    console.log("no");
-                }
-            })
+            if (confirm("Are you sure you want to delete this User!")) {
+                console.log("yes");
+                window.location = `/iSecure/adminPage.php?delete=${sno}`;
+            } else {
+                console.log("no");
+            }
         })
+    })
     </script>
 
 </body>
